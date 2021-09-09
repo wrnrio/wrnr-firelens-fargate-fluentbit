@@ -14,6 +14,7 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
   `docker push <accountid>.dkr.ecr.<region>.amazonaws.com/wrnr-firelens:v1`
   
 **Next Steps**
+- Create a Test ECS container from ECS -> Task Definitions -> Create new Task Definition -> Type Fargate
 - Ensure **_Enable Firelens Configuration_** is selected in **_Log Router Integration_** and **_Type_** is _fluentbit_ and **_Image_** is the image pushed above.
 - Reference the config file path in `firelensConfiguration` key:
 ```
@@ -25,3 +26,4 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
      }
  }
  ```
+ - Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
