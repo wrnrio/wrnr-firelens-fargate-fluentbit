@@ -1,0 +1,89 @@
+{
+  "executionRoleArn": "<create one>",   <----- change this
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awsfirelens",
+        "options": {
+          "Path": "/api/v1/fluentbit",
+          "Type": "my_type",
+          "TLS.Verify": "off",
+          "Port": "443",
+          "Host": "<your docker host running WRNR.io or native host>",  <----- change this
+          "Index": "my_index",
+          "TLS": "On",
+          "Name": "es"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/reverse-proxy:v3",
+      "name": "reverse-proxy"
+    },
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": null,
+        "options": {
+          "awslogs-group": "/ecs/demo",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 3000,
+          "protocol": "tcp",
+          "containerPort": 3000
+        }
+      ],
+      "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/app:v2",
+      "name": "app"
+    },
+    {
+       "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/demo",
+          "awslogs-region": "us-east-1",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "environment": [
+        {
+          "name": "WRNR_PARSER",
+          "value": "nginx"
+        },
+        {
+          "name": "WRNR_TYPE",
+          "value": "accesslog"
+        }
+      ],
+      "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/wrnr-firelens:v1",
+      "firelensConfiguration": {
+        "type": "fluentbit",
+        "options": {
+          "config-file-type": "file",
+          "config-file-value": "/extra.conf"
+        }
+      },
+      "name": "log_router"
+    }
+  ],
+  "memory": "512",
+  "compatibilities": [
+    "EC2",
+    "FARGATE"
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+}
