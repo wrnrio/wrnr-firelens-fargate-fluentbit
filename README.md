@@ -38,7 +38,7 @@ Once you have successfully configured Fargate and the container is running, do t
 2. `curl http://<ip-address>/api/health-check`
 3. This should send the `nginx` access log line to WRNR.io
 4. Login to WRNR.io console
-5. enter this query in the query window and see results `(#type=='accesslog')`
+5. Enter this query in the query window and see results `(#type=='accesslog')`
 6. There's more documentation from the **Docs** menu
 
 **Other steps**  
