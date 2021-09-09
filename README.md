@@ -29,6 +29,7 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
  - Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
 
 **Viewing it from WRNR.io**
+
 Once you have successfully configured Fargate and the container is running, do the following:
 1. Get the IP address of the the container
 2. `url http://<ip-address>/api/health-check
@@ -36,3 +37,7 @@ Once you have successfully configured Fargate and the container is running, do t
 4. Login to WRNR.io console
 5. enter this query in the query window and see results `(#type=='accesslog')`
 6. There's more documentation from the **Docs** menu
+
+**Other steps**  
+
+Install WRNR.io in your OwnVPC. Read the docs [here].(https://github.com/wrnrio/wrnr-docker)
