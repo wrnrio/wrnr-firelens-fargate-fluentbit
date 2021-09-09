@@ -40,4 +40,4 @@ Once you have successfully configured Fargate and the container is running, do t
 
 **Other steps**  
 
-Install WRNR.io in your OwnVPC. Read the docs [here].(https://github.com/wrnrio/wrnr-docker)
+Install WRNR.io in your OwnVPC. Read the docs [here](https://github.com/wrnrio/wrnr-docker).
