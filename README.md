@@ -4,7 +4,7 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
 **How to Build**
 - Download this repo and navigate to wrnr-fluentbit-image
 - Build this image<br>
-  `docker build -t wrnr-firelenx .`
+  `docker build -t wrnr-firelens .`
 - Sign into AWS ECR with your account
   `aws ecr get-login` or 
   `docker login -u AWS https://<accountid>.dkr.ecr.<region>.amazonaws.com -p `aws ecr get-login-password`
