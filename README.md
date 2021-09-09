@@ -35,7 +35,7 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
 
 Once you have successfully configured Fargate and the container is running, do the following:
 1. Get the IP address of the the container
-2. `url http://<ip-address>/api/health-check
+2. `curl http://<ip-address>/api/health-check`
 3. This should send the `nginx` access log line to WRNR.io
 4. Login to WRNR.io console
 5. enter this query in the query window and see results `(#type=='accesslog')`
