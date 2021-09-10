@@ -86,9 +86,7 @@ A complete config for log router may look like this:
 }
  ```
  
-We have provided a sampe definition. Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
-
-Note: If sending JSON data, none of the tags are needed. It can set the endpoint to `/api/v1/json`. To send JSON data to a custom parser the endpoint is `/api/v1/json/<parser>` where `parser` is defined and applied to end point and is active.
+Tip: Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point to a Nginx -> Node sample app.
 
 **Viewing it from WRNR.io**
 
