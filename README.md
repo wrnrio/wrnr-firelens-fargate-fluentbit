@@ -22,38 +22,40 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
 - Reference the config file path in `firelensConfiguration` key:
 ```
 "firelensConfiguration": {
-     "type": "fluentbit",
-     "options": {
-     "config-file-type": "file",
-     "config-file-value": "/extra.conf"
-     }
+    "type": "fluentbit",
+    "options": {
+        "config-file-type": "file",
+        "config-file-value": "/extra.conf"
+    }
 }
 ```
 #### Configuring the container agent or container
 The following environment variables that are default for 'es' apply here too.
 ```
 "logConfiguration": {
-   "logDriver": "awsfirelens",
-       "options": {
-          "Path": "/api/v1/fluentbit",
-          "Type": "my_type",
-          "TLS.Verify": "off",
-          "Port": "443",
-          "Host": "<your docker host running WRNR.io or native host>",  
-          "Index": "my_index",
-          "TLS": "On",
-          "Name": "es"
-      }
-   }
- }
+    "logDriver": "awsfirelens",
+    "options": {
+        "Path": "/api/v1/fluentbit",
+        "Type": "my_type",
+        "TLS.Verify": "off",
+        "Port": "443",
+        "Host": "<your docker host running WRNR.io or native host>",  
+        "Index": "my_index",
+        "TLS": "On",
+        "Name": "es"
+    }
+}
  ```
  
  Note a few things:<br>
  - The Path is configured to `/api/v1/fluentbit` so WRNR knows where it's coming from
  - The Type is 'es' so fluentbit can sent it like it's Elastic Search
 
-The container or log router should define the following WRNR_ variables:<br>
-- WRNR_TYPE:`<value>` so we what type it is. Valid values are `"syslog3164", "accesslog", "mbeat", "customlog", "trace", "kubernetes"`
+There are a few tags that WRNR.io requires to know the content type and what parser to apply to it.<br>
+The tags are WRNR_TYPE, WRNR_PARSER, WRNR_TAGS. They are explained below.
+
+The container or log router **must** define the following WRNR_ variables:<br>
+- WRNR_TYPE:`<value>` so we know what type it is. Valid values are `"accesslog", "customlog", "trace", "kubernetes"`
 
 The container or log router may define these environment variables that get sent by fluentbit as additional keys:<br>
 - WRNR_PARSER:`<value>` a custom parser to apply to this type. Only valid for `"customlog"` and `"accesslog"`.
@@ -62,39 +64,31 @@ The container or log router may define these environment variables that get sent
 A complete config for log router may look like this:
 ```
 {
-   "logConfiguration": {
-   "logDriver": "awslogs",
-       "options": {
-          "awslogs-group": "/ecs/demo",
-          "awslogs-region": "us-east-1",
-          "awslogs-create-group": "true",
-          "awslogs-stream-prefix": "ecs"
-       }
-   },
-   "environment": [
-      {
-        "name": "WRNR_PARSER",
-        "value": "nginx"
-      },
-      {
-        "name": "WRNR_TYPE",
-        "value": "accesslog"
-      }
-   ],
-   "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/wrnr-firelens:v1",
-   "firelensConfiguration": {
-      "type": "fluentbit",
+    "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/wrnr-firelens:v1",
+    "firelensConfiguration": {
+        "type": "fluentbit",
         "options": {
-          "config-file-type": "file",
-          "config-file-value": "/extra.conf"
+            "config-file-type": "file",
+            "config-file-value": "/extra.conf"
         }
-      },
-      "name": "log_router"
-   }
- }
+    },
+    "name": "log_router"
+    "environment": [
+        {
+            "name": "WRNR_PARSER",
+            "value": "nginx"
+        },
+        {
+            "name": "WRNR_TYPE",
+            "value": "accesslog"
+        }
+    ]  
+}
  ```
  
 We have provided a sampe definition. Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
+
+Note: If sending JSON data, none of the tags are needed. It can set the endpoint to `/api/v1/json`. To send JSON data to a custom parser the endpoint is `/api/v1/json/<parser>` where `parser` is defined and applied to end point and is active.
 
 **Viewing it from WRNR.io**
 
