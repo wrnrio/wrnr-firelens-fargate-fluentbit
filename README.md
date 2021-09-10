@@ -27,9 +27,74 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
      "config-file-type": "file",
      "config-file-value": "/extra.conf"
      }
+}
+```
+#### Configuring the container agent or container
+The following environment variables that are default for 'es' apply here too.
+```
+"logConfiguration": {
+   "logDriver": "awsfirelens",
+       "options": {
+          "Path": "/api/v1/fluentbit",
+          "Type": "my_type",
+          "TLS.Verify": "off",
+          "Port": "443",
+          "Host": "<your docker host running WRNR.io or native host>",  
+          "Index": "my_index",
+          "TLS": "On",
+          "Name": "es"
+      }
+   }
  }
  ```
- - Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
+ 
+ Note a few things:<br>
+ - The Path is configured to `/api/v1/fluentbit` so WRNR knows where it's coming from
+ - The Type is 'es' so fluentbit can sent it like it's Elastic Search
+
+The container or log router should define the following WRNR_ variables:<br>
+- WRNR_TYPE:`<value>` so we what type it is. Valid values are `"syslog3164", "accesslog", "mbeat", "customlog", "trace", "kubernetes"`
+
+The container or log router may define these environment variables that get sent by fluentbit as additional keys:<br>
+- WRNR_PARSER:`<value>` a custom parser to apply to this type. Only valid for `"customlog"` and `"accesslog"`.
+- WRNR_TAGS:`<tags>` in the format `"tag1=value1, tag2=value2"` to send custom tags. Eg: `"region="west", role="db", app="finance"`
+
+A complete config for log router may look like this:
+```
+{
+   "logConfiguration": {
+   "logDriver": "awslogs",
+       "options": {
+          "awslogs-group": "/ecs/demo",
+          "awslogs-region": "us-east-1",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "ecs"
+       }
+   },
+   "environment": [
+      {
+        "name": "WRNR_PARSER",
+        "value": "nginx"
+      },
+      {
+        "name": "WRNR_TYPE",
+        "value": "accesslog"
+      }
+   ],
+   "image": "774964239202.dkr.ecr.us-east-1.amazonaws.com/wrnr-firelens:v1",
+   "firelensConfiguration": {
+      "type": "fluentbit",
+        "options": {
+          "config-file-type": "file",
+          "config-file-value": "/extra.conf"
+        }
+      },
+      "name": "log_router"
+   }
+ }
+ ```
+ 
+We have provided a sampe definition. Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point
 
 **Viewing it from WRNR.io**
 
