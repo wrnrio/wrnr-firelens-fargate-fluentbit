@@ -52,13 +52,13 @@ A complete config for log router may look like this:
     "name": "log_router"
     "environment": [
         {
+            "name": "WRNR_TYPE",
+            "value": "accesslog"
+        },
+        {
             "name": "WRNR_PARSER",
             "value": "nginx"
         },
-        {
-            "name": "WRNR_TYPE",
-            "value": "accesslog"
-        }
     ]  
 }
  ```
