@@ -47,9 +47,10 @@ The following environment variables that are default for 'es' apply here too.
 }
  ```
  
- Note a few things:<br>
- - The Path is configured to `/api/v1/fluentbit` so WRNR knows where it's coming from
- - The Type is 'es' so fluentbit can send it like it's Elastic Search
+Note a few things:<br>
+- The Name is `es` so fluentbit can send it like it's ElasticSearch
+- The Path is configured to `/api/v1/fluentbit` so WRNR knows where it's coming from
+
 
 There are a few tags that WRNR.io requires to know the content type and what parser to apply to it.<br>
 The tags are WRNR_TYPE, WRNR_PARSER, WRNR_TAGS. They are explained below.
