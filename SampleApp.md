@@ -36,7 +36,7 @@ The container or log router **must** define the following WRNR_ metadata:<br>
 
 The container or log router may define these environment variables that get sent by fluentbit as additional metadata:<br>
 - WRNR_PARSER:`<value>` a custom parser to apply to this type. Only valid for `customlog` and `accesslog`.
-- WRNR_TAGS:`<tags>` in the format `"tag1=value1, tag2=value2"` to send custom tags. <br>Eg: `region=west, role="db", runmode=prod, app="credit finance"`
+- WRNR_TAGS:`<tags>` in the format `tag1=value1, tag2=value2` to send custom tags. <br>Eg: `region=west, role="db", runmode=prod, app="credit finance"`
 
 A complete config for log router may look like this:
 ```
