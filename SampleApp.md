@@ -1,10 +1,10 @@
-## A sample app to test WRNR firelens fluent bit. ##
-We are going to use this [sample](https://github.com/awslabs/ecs-nginx-reverse-proxy/tree/master/reverse-proxy) to run in an ECS Fargate container 
+## A sample app to test WRNR firelens fluentbit integration. ##
+We are going to use this [sample](https://github.com/awslabs/ecs-nginx-reverse-proxy/tree/master/reverse-proxy) to run in an ECS Fargate container. Follow instructions to build and push images to ECS repository.
 
 - Create a Test ECS container from ECS -> Task Definitions -> Create new Task Definition -> Type Fargate
 - Ensure **_Enable Firelens Configuration_** is selected in **_Log Router Integration_** and **_Type_** is _fluentbit_ and **_Image_** is the image pushed above or the publicly available ECR repo image.
 
-#### Configuring the container agent or container
+#### Configuring the `reverseproxy` container ####
 The following environment variables that are default for 'es' apply here too.
 ```
 "logConfiguration": {
@@ -26,6 +26,7 @@ Note a few things:<br>
 - The Name is `es` so fluentbit can send it like it's ElasticSearch
 - The Path is configured to `/api/v1/fluentbit` so WRNR knows where it's coming from
 
+#### Configuring the `log-router` container ####
 
 There are a few tags that WRNR.io requires to know the content type and what parser to apply to it.<br>
 The tags are WRNR_TYPE, WRNR_PARSER, WRNR_TAGS. They are explained below.
@@ -62,7 +63,7 @@ A complete config for log router may look like this:
 }
  ```
  
-Tip: Paste the `demo-app-task-definition.json` in **_Configure via JSON_** as a starting point to a Nginx -> Node sample app.
+Tip: Paste the `demo-app-task-definition.json` in **_Configure via JSON_** for the sample app.
 
 **Viewing it from WRNR.io**
 
