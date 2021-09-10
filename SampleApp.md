@@ -34,7 +34,7 @@ The tags are WRNR_TYPE, WRNR_PARSER, WRNR_TAGS. They are explained below.
 The container or log router **must** define the following WRNR_ metadata:<br>
 - WRNR_TYPE:`<value>` so we know what type it is. Valid values are `syslog3164, accesslog, customlog, trace, kubernetes`
 
-The container or log router may define these environment variables that get sent by fluentbit as additional keys:<br>
+The container or log router may define these environment variables that get sent by fluentbit as additional metadata:<br>
 - WRNR_PARSER:`<value>` a custom parser to apply to this type. Only valid for `customlog` and `accesslog`.
 - WRNR_TAGS:`<tags>` in the format `"tag1=value1, tag2=value2"` to send custom tags. <br>Eg: `region=west, role="db", runmode=prod, app="credit finance"`
 
