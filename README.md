@@ -15,7 +15,8 @@ Custom build of fluentbit image to support WRNR.io attributes. Since Firelens fo
  
  or,
  use prebuilt image from `774964239202.dkr.ecr.us-east-1.amazonaws.com/wrnr-firelens:v1` (transfer charges may apply)
-  
+ 
+- Turn on **Log Router Integration**
 - Reference the config file path in `firelensConfiguration` key:
 ```
 "firelensConfiguration": {
