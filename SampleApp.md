@@ -28,10 +28,10 @@ Note a few things:<br>
 
 #### Configuring the `log-router` container ####
 
-There are a few tags that WRNR.io requires to know the content type and what parser to apply to it.<br>
+There are a few metadata tags that WRNR.io requires to know the content type and what parser to apply to it.<br>
 The tags are WRNR_TYPE, WRNR_PARSER, WRNR_TAGS. They are explained below.
 
-The container or log router **must** define the following WRNR_ variables:<br>
+The container or log router **must** define the following WRNR_ metadata:<br>
 - WRNR_TYPE:`<value>` so we know what type it is. Valid values are `syslog3164, accesslog, customlog, trace, kubernetes`
 
 The container or log router may define these environment variables that get sent by fluentbit as additional keys:<br>
